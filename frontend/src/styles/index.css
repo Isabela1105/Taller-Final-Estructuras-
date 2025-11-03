@@ -1,0 +1,31 @@
+:root{
+    background: #21F2F4;
+    card: #FFFFFF;
+    text: #1f2937;
+    muted: #6b7280;
+    border: #e5e7eb;
+    accent-color: #111827;
+    danger: #ef4444;
+}
+
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #21f472cc;
+    color: var(--text);
+} 
+.container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; box-shadow: 0 1px 2px rgba(0,0,0,.04); }
+.btn { background: var(--accent); color: #fff; border: 0; border-radius: 12px; padding: 10px 14px; cursor: pointer; font-weight: 600; }
+.btn:disabled { opacity: .6; cursor: not-allowed; }
+.input { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 12px; }
+.label { display: block; font-size: 14px; margin-bottom: 6px; color: var(--muted); }
+.row { display: grid; gap: 12px; }
+@media (min-width: 768px) { .row-3 { grid-template-columns: repeat(3, 1fr); } .row-4 { grid-template-columns: repeat(4, 1fr);} .row-5 { grid-template-columns: repeat(5, 1fr);} }
+.table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.table th, .table td { border-bottom: 1px solid var(--border); padding: 8px 10px; text-align: left; }
+.table thead { background: #f9fafb; font-weight: 600; }
+.badge { display: inline-block; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; background: #eef2ff; padding: 4px 8px; border-radius: 10px; }
+
+
