@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { apiFetch } from "../services/api";
-import { Link } from "react-router-dom"; 
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -14,79 +12,65 @@ export default function Login() {
     setError("");
 
     try {
-      // Llamada al backend FastAPI → POST /auth/login
-      const data = await apiFetch("/auth/login", {
+      const res = await fetch("http://localhost:8000/api/auth/login", {
         method: "POST",
-        body: { username, password },
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
       });
 
-      if (data.access_token) {
-        localStorage.setItem("token", data.access_token);
-        navigate("/"); // Redirige al home protegido
-      } else {
-        setError("Respuesta inesperada del servidor");
+      if (!res.ok) {
+        setError("Usuario o contraseña incorrectos.");
+        return;
       }
+
+      const data = await res.json();
+      localStorage.setItem("token", data.access_token);
+      navigate("/");
     } catch (err) {
-      setError(err.message || "Error al iniciar sesión");
+      setError("Error de conexión con el servidor.");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-emerald-400">
-      <div className="bg-emerald-300 p-10 rounded-3xl shadow-xl w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Iniciar sesión</h2>
+    <div className="login-page">
+      <div className="login-card">
+        <h1>Iniciar sesión</h1>
 
-        {error && (
-          <div className="bg-red-100 text-red-600 p-3 rounded-lg mb-4 flex justify-between items-center">
-            <span>{error}</span>
-            <button
-              onClick={() => setError("")}
-              className="bg-red-500 text-white px-3 py-1 rounded-lg font-semibold"
-            >
-              Cerrar
-            </button>
-          </div>
-        )}
+        {error && <div className="login-error">{error}</div>}
 
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block mb-1">Usuario</label>
+        <form onSubmit={handleSubmit} className="login-form">
+          <div className="field">
+            <label>Usuario</label>
             <input
               type="text"
+              placeholder="Tu nombre de usuario"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-600"
             />
           </div>
 
-          <div className="mb-6">
-            <label className="block mb-1">Contraseña</label>
+          <div className="field">
+            <label>Contraseña</label>
             <input
               type="password"
+              placeholder="Tu contraseña"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-600"
             />
           </div>
 
-          <button
-            type="submit"
-            className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 rounded-lg transition duration-200"
-          >
+          <button className="btn-primary" type="submit">
             Entrar
           </button>
-            <p className="text-center mt-4">
-            ¿No tienes cuenta?{" "}
-            <Link to="/register" className="text-emerald-800 underline">
-                Crear cuenta
-            </Link>
-            </p>
-
         </form>
+
+        <p className="register-text">
+          ¿No tienes cuenta? <Link to="/register">Crear cuenta</Link>
+        </p>
       </div>
     </div>
-
   );
 }
+
