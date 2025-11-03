@@ -1,9 +1,8 @@
-// src/services/api.js
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
 
-export async function apiFetch(path, { method = "GET", body, token, expectJson = true } = {}) {
+export async function apiFetch(path, { method = "GET", body, token } = {}) {
   const headers = { "Content-Type": "application/json" };
-  if (token) headers["Authorization"] = `Bearer ${token}`;
+  if (token) headers.Authorization = `Bearer ${token}`;
 
   const res = await fetch(`${BASE_URL}${path}`, {
     method,
@@ -18,14 +17,15 @@ export async function apiFetch(path, { method = "GET", body, token, expectJson =
   }
 
   if (!res.ok) {
-    let errMsg = `Error ${res.status}`;
+    let msg = `Error ${res.status}`;
     try {
-      const err = await res.json();
-      if (err?.message) errMsg = err.message;
-      if (err?.errors) errMsg = Array.isArray(err.errors) ? err.errors.join("\n") : JSON.stringify(err.errors);
-    } catch (_) {}
-    throw new Error(errMsg);
+      const j = await res.json();
+      if (j?.detail) msg = typeof j.detail === "string" ? j.detail : JSON.stringify(j.detail);
+      if (j?.message) msg = j.message;
+    } catch {}
+    throw new Error(msg);
   }
 
-  return expectJson ? res.json() : res.text();
+  return res.json().catch(() => ({}));
 }
+
