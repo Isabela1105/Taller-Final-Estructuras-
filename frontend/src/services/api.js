@@ -1,19 +1,28 @@
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+// src/services/api.js
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
 
-export async function apiFetch(path, { method = "GET", body, token } = {}) {
-  const headers = { "Content-Type": "application/json" };
-  if (token) headers.Authorization = `Bearer ${token}`;
+// Lee token siempre del localStorage (no pasarlo manualmente)
+function authHeaders() {
+  const t = localStorage.getItem("token");
+  return t ? { Authorization: `Bearer ${t}` } : {};
+}
 
+export async function apiFetch(path, { method = "GET", body, headers = {} } = {}) {
   const res = await fetch(`${BASE_URL}${path}`, {
     method,
-    headers,
+    headers: {
+      "Content-Type": "application/json",
+      ...authHeaders(),
+      ...headers,
+    },
     body: body ? JSON.stringify(body) : undefined,
   });
 
   if (res.status === 401) {
     localStorage.removeItem("token");
-    window.location.href = "/login";
-    return;
+    // redirige a login
+    if (window.location.pathname !== "/login") window.location.href = "/login";
+    throw new Error("No autorizado");
   }
 
   if (!res.ok) {
@@ -26,6 +35,23 @@ export async function apiFetch(path, { method = "GET", body, token } = {}) {
     throw new Error(msg);
   }
 
-  return res.json().catch(() => ({}));
+  // algunos 204 no tienen body
+  try { return await res.json(); } catch { return {}; }
 }
 
+export const api = {
+  me: () => apiFetch("/auth/me"),
+  // Nodos
+  listNodes: () => apiFetch("/graph/nodes"),
+  createNode: (name) => apiFetch("/graph/nodes", { method: "POST", body: { name } }),
+  deleteNode: (id) => apiFetch(`/graph/nodes/${id}`, { method: "DELETE" }),
+  // Aristas
+  listEdges: () => apiFetch("/graph/edges"),
+  createEdge: (src_id, dst_id, weight) =>
+    apiFetch("/graph/edges", { method: "POST", body: { src_id, dst_id, weight: Number(weight) } }),
+  deleteEdge: (id) => apiFetch(`/graph/edges/${id}`, { method: "DELETE" }),
+  // Algoritmos
+  bfs: (start_id) => apiFetch(`/graph/bfs?start_id=${encodeURIComponent(start_id)}`),
+  dijkstra: (src_id, dst_id) =>
+    apiFetch(`/graph/shortest-path?src_id=${encodeURIComponent(src_id)}&dst_id=${encodeURIComponent(dst_id)}`),
+};

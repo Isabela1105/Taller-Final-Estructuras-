@@ -1,9 +1,13 @@
-from fastapi import APIRouter, Depends, HTTPException, Request, status
+# app/routers/auth.py
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel import Session
-from ..core.deps import get_db
+from ..core.deps import get_db, get_current_user
 from ..core.security import get_password_hash, verify_password, create_access_token
+from ..schemas.auth import RegisterRequest, LoginJSON, Token, UserPublic
 from ..crud.user import get_by_username, create_user
-from ..schemas.auth import RegisterRequest, LoginJSON, Token
+from ..models import User
+from ..models import User
+
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -22,3 +26,9 @@ def login(body: LoginJSON, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="invalid credentials")
     token = create_access_token(user.username)
     return {"access_token": token, "token_type": "bearer"}
+
+
+@router.get("/me", response_model=UserPublic)
+def me(current_user: User = Depends(get_current_user)):
+    """Devuelve los datos del usuario autenticado."""
+    return {"id": current_user.id, "username": current_user.username}
