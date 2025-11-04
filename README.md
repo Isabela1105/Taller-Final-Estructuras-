@@ -71,3 +71,10 @@ visualizar y analizar grafos mediante algoritmos clásicos (BFS y Dijkstra), con
    ```bash
    npm run dev
 
+## Pruebas Minimas Manuales
+
+### Registro
+```bash
+   Invoke-RestMethod -Method Post -Uri "$BASE/api/auth/register" `
+   ContentType "application/json" `
+   -Body '{"username":"demo","password":"1234"}'
