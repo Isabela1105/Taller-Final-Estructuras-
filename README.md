@@ -59,7 +59,7 @@ visualizar y analizar grafos mediante algoritmos clásicos (BFS y Dijkstra), con
    uvicorn app.main:app --reload
 
 
-### **Fronted**
+### **Frontend**
 
 1. Ir al directorio del frontend:
    ```bash
@@ -74,7 +74,6 @@ visualizar y analizar grafos mediante algoritmos clásicos (BFS y Dijkstra), con
 ## Pruebas Minimas Manuales
 
 ### Registro
-```bash
 Invoke-RestMethod -Method Post -Uri "$BASE/api/auth/register" `
 ContentType "application/json" `
 -Body '{"username":"demo","password":"1234"}'
