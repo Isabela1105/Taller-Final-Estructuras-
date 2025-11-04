@@ -39,28 +39,30 @@ visualizar y analizar grafos mediante algoritmos clásicos (BFS y Dijkstra), con
 
 ## ⚙️ Instalación y ejecución
 
-### 📦 Backend
+### Backend 
 
-# 1. Clonar el repositorio
-  ```bash
-git clone https://github.com/Isabela1105/Taller-Final-Estructuras-.git
-cd \Taller-Final-Estructuras--main\Taller-Final-Estructuras--main\Backend
+1. Clonar el repositorio:
+   ```bash
+   git clone https://github.com/<usuario>/<repositorio>.git
+   cd backend
+2. Instalar dependencias
+   ```bash
+   npm install
+  
+3. Ejecutar el servidor:
+   ```bash
+   npm run dev
 
-# 2. Crear entorno virtual
-```bash
-python -m venv venv
-venv\Scripts\activate  # (Windows)
-# source venv/bin/activate  (Linux/Mac)
 
-# 3. Instalar dependencias
-pip install -r requirements.txt
+### **Fronted**
 
-# 4. Ejecutar el servidor
-uvicorn app.main:app --reload
-
-### *** Frontend *** 
-```bash
-cd ../Frontend
-npm install
-npm run dev
+1. Ir al directorio del frontend:
+   ```bash
+   cd ../frontend
+2. Instalar dependencias:
+   ```bash
+   npm install
+3. Ejecutar el servidor de desarrollo:
+   ```bash
+   npm run dev
 
