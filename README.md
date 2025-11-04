@@ -78,3 +78,9 @@ visualizar y analizar grafos mediante algoritmos clásicos (BFS y Dijkstra), con
    Invoke-RestMethod -Method Post -Uri "$BASE/api/auth/register" `
    ContentType "application/json" `
    -Body '{"username":"demo","password":"1234"}'
+
+### Respuesta del sistema
+```bash
+message
+-------
+ok
