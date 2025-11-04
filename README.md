@@ -1,6 +1,6 @@
 # 🧩 Taller Final - Estructuras de Datos y Algoritmos 2
 
-Proyecto final desarrollado para el curso de **Estructuras de Datos**, implementando un sistema completo **Full Stack (FastAPI + React)** que permite crear, 
+Proyecto final desarrollado para el curso de **Estructuras de Datos y Algoritmos 2** y por Isabela Cabezas Obregon, Samuel Salazar Trujillo, Roiman Urrego Zuñiga , implementando un sistema completo **Full Stack (FastAPI + React)** que permite crear, 
 visualizar y analizar grafos mediante algoritmos clásicos (BFS y Dijkstra), con autenticación segura y persistencia en base de datos.
 
 ## 🚀 Tecnologías utilizadas
