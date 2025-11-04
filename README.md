@@ -46,6 +46,7 @@ visualizar y analizar grafos mediante algoritmos clásicos (BFS y Dijkstra), con
    git clone https://github.com/<usuario>/<repositorio>.git
    cd \Taller-Final-Estructuras--main\Taller-Final-Estructuras--main\Backend
 2. Crear entorno virtual
+   ```bash
    python -m venv venv
    venv\Scripts\activate  # En Windows
    source venv/bin/activate  # En Linux/Mac
