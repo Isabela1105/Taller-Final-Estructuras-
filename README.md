@@ -44,14 +44,18 @@ visualizar y analizar grafos mediante algoritmos clásicos (BFS y Dijkstra), con
 1. Clonar el repositorio:
    ```bash
    git clone https://github.com/<usuario>/<repositorio>.git
-   cd backend
-2. Instalar dependencias
+   cd \Taller-Final-Estructuras--main\Taller-Final-Estructuras--main\Backend
+2. Crear entorno virtual
+   python -m venv venv
+   venv\Scripts\activate  # En Windows
+   source venv/bin/activate  # En Linux/Mac
+3. Instalar dependencias
    ```bash
-   npm install
+   pip install -r requirements.txt
   
-3. Ejecutar el servidor:
+4. Ejecutar el servidor:
    ```bash
-   npm run dev
+   uvicorn app.main:app --reload
 
 
 ### **Fronted**
