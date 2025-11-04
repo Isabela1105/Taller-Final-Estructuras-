@@ -55,3 +55,11 @@ pip install -r requirements.txt
 
 # 4. Ejecutar el servidor
 uvicorn app.main:app --reload
+
+
+### Frontend
+```bash
+cd ../Frontend
+npm install
+npm run dev
+
