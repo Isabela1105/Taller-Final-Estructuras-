@@ -72,15 +72,35 @@ visualizar y analizar grafos mediante algoritmos clásicos (BFS y Dijkstra), con
    npm run dev
 
 ## Pruebas Minimas Manuales
-
 ### Registro
-```bash
-Invoke-RestMethod -Method Post -Uri "$BASE/api/auth/register" `
-ContentType "application/json" `
--Body '{"username":"demo","password":"1234"}'
+   ```bash
+   Invoke-RestMethod -Method Post -Uri "$BASE/api/auth/register" `
+   -ContentType "application/json" `
+   -Body '{"username":"demo","password":"1234"}'
+   ```
+### Respuesta del Sistema
+   ```bash
+   message
+   -------
+   ok
+```
 
-### Respuesta del sistema
+### Login
 ```bash
-message
--------
-ok
+$login = Invoke-RestMethod -Method Post -Uri "$BASE/api/auth/login" `
+  -ContentType "application/json" `
+  -Body '{"username":"demo","password":"1234"}'
+
+$TOKEN = $login.access_token
+$headers = @{ "Authorization" = "Bearer $TOKEN" }
+
+Write-Host "TOKEN: $TOKEN"
+```
+
+### Respuesta del Sistema
+```bash
+TOKEN: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkZW1vIiwiZXhwIjoxNzYyMzA1Mjc5fQ.5fBWh-iOJ0x48dA11p5c2CgHGXPpxjXAeoVysl7Pq-w
+```
+
+
+
